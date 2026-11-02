@@ -1,22 +1,30 @@
 {
-  "name": "my-services",
-  "version": "0.1.0",
+  "name": "brian-bazooband",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "test": "node --test tests/*.test.js"
   },
   "dependencies": {
-    "next": "16.4.3",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "@upstash/ratelimit": "latest",
+    "@upstash/redis": "latest",
+    "lucide-react": "latest",
+    "motion": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "resend": "latest",
+    "server-only": "latest"
   },
   "devDependencies": {
-    "@tailwindcss/turbopack": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "16.4.3",
-    "tailwindcss": "^4"
+    "@tailwindcss/postcss": "^4.3.3",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "postcss": "^8.5.32",
+    "tailwindcss": "^4.3.3"
   }
 }
