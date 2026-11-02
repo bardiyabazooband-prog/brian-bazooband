@@ -1,13 +1,66 @@
 "use client";
-import { ArrowUpRight, Plus, BookOpen, Sparkles } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { useState } from "react";
+import { ArrowUpRight, Plus, BookOpen, Sparkles, ExternalLink } from "lucide-react";
 import { usePreferences } from "./Providers";
 import { siteConfig } from "@/lib/site-config";
 import { Reveal, SectionHeading, Button } from "./UI";
 function StudyPreview({ t }) {
   return <div className="study-browser"><div className="browser-bar"><div className="traffic"><i /><i /><i /></div><span className="browser-address">getstudyup.com</span><span>↗</span></div><div className="study-content"><div className="study-sidebar" aria-hidden="true"><span className="study-brand">S<span>↑</span></span><BookOpen size={18} /><span className="sidebar-line" /><span className="sidebar-line" /><span className="sidebar-line" /></div><div className="study-main"><div className="study-top"><strong>StudyUp<span>✦</span></strong><span>{t.work.dashboard}</span></div><p className="study-greeting">{t.work.previewTitle}</p><p className="study-subtitle">{t.work.previewSub}</p><div className="math-card"><div><span className="math-tag">{t.work.topic}</span><h4>{t.work.math}</h4><p className="formula">y = x² − 4x + 3</p><span className="lesson"><Sparkles size={12} />{t.work.lesson}</span></div><svg viewBox="0 0 180 145" aria-hidden="true"><defs><pattern id="math-grid" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M 18 0 L 0 0 0 18" fill="none" stroke="currentColor" strokeOpacity=".13" /></pattern></defs><rect width="180" height="145" fill="url(#math-grid)" /><path d="M10 72H172M90 5V140" stroke="currentColor" strokeOpacity=".25" /><path d="M30 15 Q90 205 150 15" fill="none" stroke="#7161ef" strokeWidth="3" /><circle cx="90" cy="110" r="4" fill="#7161ef" /></svg></div><div className="study-tiles"><span><BookOpen size={16} />{t.work.lesson}</span><span>{t.work.next}<ArrowUpRight size={16} /></span></div></div></div></div>;
 }
+function LiveStudyUpPreview({ project, t }) {
+  const [showConcept, setShowConcept] = useState(false);
+  return (
+    <div className="live-preview-shell">
+      <div className="live-preview-toolbar">
+        <div className="traffic" aria-hidden="true"><i /><i /><i /></div>
+        <span className="live-preview-address">getstudyup.com</span>
+        <a href={project.url} target="_blank" rel="noopener noreferrer" aria-label={t.work.visit} className="live-preview-external"><ExternalLink size={16} /></a>
+      </div>
+      {showConcept ? (
+        <div className="live-preview-concept"><StudyPreview t={t} /></div>
+      ) : (
+        <div className="live-preview-viewport">
+          <iframe src={project.url} loading="lazy" title={t.work.livePreview} referrerPolicy="no-referrer" className="live-preview-iframe" />
+        </div>
+      )}
+      <div className="live-preview-actions">
+        <p>{t.work.previewNote}</p>
+        <button type="button" onClick={() => setShowConcept(value => !value)} className="live-preview-toggle">
+          {showConcept ? t.work.viewLive : t.work.viewConcept}
+        </button>
+      </div>
+    </div>
+  );
+}
 export default function Portfolio() {
-  const { t } = usePreferences(); const reduced = useReducedMotion();
-  return <section id="work" className="section work-section"><div className="container"><SectionHeading {...t.work} />{siteConfig.projects.map(project => <Reveal className="project" key={project.id}><a className="project-preview" href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`${t.work.visit} — ${t.work.illustration}`}><motion.div whileHover={reduced ? {} : { scale: 1.025, y: -5 }} transition={{ duration: 0.5 }}><StudyPreview t={t} /></motion.div><span className="project-open"><ArrowUpRight aria-hidden="true" /></span><span className="illustration-note">{t.work.illustration}</span></a><div className="project-info"><div><div className="tag-row">{project.tags.map(tag => <span className="tag" key={tag}>{t.work.tags[tag]}</span>)}</div><h3>{project.name}</h3><p>{t.work.description}</p></div><Button secondary href={project.url} external>{t.work.visit}</Button></div></Reveal>)}<Reveal className="upcoming-card"><div className="upcoming-symbol" aria-hidden="true"><Plus size={34} strokeWidth={1} /></div><div><p className="eyebrow">{t.work.upcomingLabel}</p><h3>{t.work.upcoming}</h3><p>{t.work.upcomingText}</p></div><a href="#contact" className="text-link">{t.work.upcomingCta}<ArrowUpRight size={18} aria-hidden="true" /></a></Reveal></div></section>;
+  const { t } = usePreferences();
+  return (
+    <section id="work" className="section work-section">
+      <div className="container">
+        <SectionHeading {...t.work} />
+        {siteConfig.projects.map(project => (
+          <Reveal className="project" key={project.id}>
+            <LiveStudyUpPreview project={project} t={t} />
+            <div className="project-info">
+              <div>
+                <div className="tag-row">{project.tags.map(tag => <span className="tag" key={tag}>{t.work.tags[tag]}</span>)}</div>
+                <h3>{project.name}</h3>
+                <p>{t.work.description}</p>
+              </div>
+              <Button secondary href={project.url} external>{t.work.visit}</Button>
+            </div>
+          </Reveal>
+        ))}
+        <Reveal className="upcoming-card">
+          <div className="upcoming-symbol" aria-hidden="true"><Plus size={34} strokeWidth={1} /></div>
+          <div>
+            <p className="eyebrow">{t.work.upcomingLabel}</p>
+            <h3>{t.work.upcoming}</h3>
+            <p>{t.work.upcomingText}</p>
+          </div>
+          <a href="#contact" className="text-link">{t.work.upcomingCta}<ArrowUpRight size={18} aria-hidden="true" /></a>
+        </Reveal>
+      </div>
+    </section>
+  );
 }
