@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { ArrowUpRight, Plus, BookOpen, Sparkles, ExternalLink } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import { usePreferences } from "./Providers";
 import { siteConfig } from "@/lib/site-config";
 import { Reveal, SectionHeading, Button } from "./UI";
