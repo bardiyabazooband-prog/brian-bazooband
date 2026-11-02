@@ -59,3 +59,24 @@
  .service-card p,.upcoming-card p:not(.eyebrow),.pricing-card li{font-size:13px}
  .service-card{min-height:0}
 }
+
+/* Portfolio: compact, editable project list */
+.project-list{display:flex;flex-direction:column;gap:14px}
+.project-list-row{display:flex;align-items:center;gap:24px;min-width:0;padding:25px 28px;border:1px solid var(--line);border-radius:14px;background:var(--surface);transition:border-color .2s,box-shadow .2s}
+.project-list-row:hover{border-color:var(--accent);box-shadow:0 12px 35px var(--soft)}
+.project-list-icon{flex:0 0 64px;width:64px;height:64px;display:grid;place-items:center;border:1px solid var(--line);border-radius:13px;background:var(--elevated);color:var(--accent)}
+.project-list-icon img{display:block;width:32px;height:32px;object-fit:contain}
+.project-list-copy{flex:1;min-width:0}
+.project-list-copy h3{font-size:clamp(19px,2vw,24px);margin-bottom:7px}
+.project-list-copy p{font-size:14px;line-height:1.6;color:var(--muted);max-width:700px}
+.project-list-domain{display:inline-block;margin-top:10px;font-size:12px;color:var(--accent);overflow-wrap:anywhere}
+.project-list-visit{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:44px;padding:10px 15px;border:1px solid var(--line);border-radius:8px;background:var(--elevated);font-size:13px;font-weight:600}
+.project-list-visit:hover{border-color:var(--accent)}
+@media(max-width:700px){
+ .project-list-row{align-items:flex-start;gap:15px;padding:19px}
+ .project-list-icon{flex-basis:48px;width:48px;height:48px;border-radius:10px}
+ .project-list-icon img{width:26px;height:26px}
+ .project-list-visit{align-self:center;min-width:44px;padding:10px}
+ .project-list-visit span{display:none}
+ .project-list-copy p{font-size:13px}
+}
